@@ -67,7 +67,7 @@ const ChatPage = () => {
           type="text"
           id="username"
           value={""}
-          onChange={(e) => console.log(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)}
         />
       </div>
 
@@ -75,7 +75,7 @@ const ChatPage = () => {
       <div>
         <Button
           id="join"
-          onClick={() => console.log("clicked join chat room")}
+          onClick={() => joinChatRoom("clicked join chat room")}
           text="Join chat room"
         ></Button>
       </div>
@@ -91,7 +91,7 @@ const ChatPage = () => {
         id="msg"
         onSubmit={handleSendMessage}
         inputValue={""}
-        handleInputChange={(e) => console.log(e.target.value)}
+        handleInputChange={(e) => setMessage(e.target.value)}
       />
     </ChatLayout>
   );

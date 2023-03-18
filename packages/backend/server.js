@@ -1,8 +1,6 @@
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import path from "path";
-import dotenv from "dotenv";
 
 import "./environment.js";
 
