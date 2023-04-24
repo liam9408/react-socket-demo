@@ -9,7 +9,7 @@ const ChatPage = () => {
   const [currentRoom, setCurrentRoom] = useState({});
 
   useEffect(() => {
-    const newSocket = io("http://localhost:8080");
+    const newSocket = io("https://be-sockets-liam-21-apr.fly.dev");
     setSocket(newSocket);
 
     // 3

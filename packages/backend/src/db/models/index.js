@@ -5,6 +5,12 @@ import Messages from "./messages.js";
 console.info("Initializing sequelize...");
 
 const sqlInitialize = () => {
+  if (process.env.NODE_ENV !== "local") {
+    // process.env.DEVELOPMENT
+    const connectionString = process.env.DATABASE_URL;
+    return new Sequelize(connectionString, {});
+  }
+
   return new Sequelize(
     process.env.POSTGRES_DATABASE,
     process.env.POSTGRES_USERNAME,

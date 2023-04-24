@@ -1,5 +1,7 @@
 import RoomModel from "../db/models/rooms.js";
 
+// const RoomModel = require("../db/models/rooms.js");
+
 class RoomService {
   async getRoomByName(roomName) {
     try {
@@ -18,7 +20,7 @@ class RoomService {
 
   async createRoom(roomName) {
     try {
-      const newRoom = await RoomModel.create({ roomName });
+      const newRoom = await RoomModel.create({ name: roomName });
       return newRoom.toJSON();
     } catch (err) {
       console.error(err);
@@ -27,3 +29,5 @@ class RoomService {
 }
 
 export default RoomService;
+
+// module.exports = RoomService;

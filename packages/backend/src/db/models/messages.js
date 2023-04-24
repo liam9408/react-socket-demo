@@ -1,6 +1,9 @@
 import { Model, DataTypes } from "sequelize";
 import Rooms from "./rooms.js";
 
+// const { Model, DataTypes } = require("sequelize");
+// const Rooms = require("./rooms");
+
 class Message extends Model {
   static initModel(sequelize) {
     Message.init(
@@ -37,3 +40,5 @@ class Message extends Model {
 }
 
 export default Message;
+
+// module.exports = Message;

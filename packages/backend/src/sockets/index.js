@@ -13,26 +13,30 @@ export const initializeSockets = (io) => {
     let chatroom = "room1";
 
     socket.on("subscribe", async (roomName) => {
-      chatroom = roomName;
+      try {
+        chatroom = roomName;
 
-      // todo: create room
-      let room = await roomService.getRoomByName(roomName);
-      console.log({ room, roomName });
-      if (!room) {
-        room = await roomService.createRoom(roomName);
+        // todo: create room
+        let room = await roomService.getRoomByName(roomName);
+        console.log({ room, roomName });
+        if (!room) {
+          room = await roomService.createRoom(roomName);
+        }
+
+        const messages = await messageService.listMessagesByRoom(room.id);
+
+        socket.join(roomName);
+        console.log("a user has joined our room: " + room);
+
+        arrayOfRooms.push(roomName);
+        console.log(arrayOfRooms);
+
+        // todo: send back room and messages object
+        // emitting event back to app.js to change room name HTML
+        io.to(chatroom).emit("joinRoom", { room, messages });
+      } catch (err) {
+        console.error(err);
       }
-
-      const messages = await messageService.listMessagesByRoom(room.id);
-
-      socket.join(roomName);
-      console.log("a user has joined our room: " + room);
-
-      arrayOfRooms.push(roomName);
-      console.log(arrayOfRooms);
-
-      // todo: send back room and messages object
-      // emitting event back to app.js to change room name HTML
-      io.to(chatroom).emit("joinRoom", { room, messages });
     });
 
     socket.on("disconnect", () => {
@@ -51,14 +55,18 @@ export const initializeSockets = (io) => {
     });
 
     socket.on("chatMessage", async (data) => {
-      const sender = data[1];
-      const message = data[0];
-      const room = data[2];
+      try {
+        const sender = data[1];
+        const message = data[0];
+        const room = data[2];
 
-      console.log(sender + " says: " + message);
+        console.log(sender + " says: " + message);
 
-      await messageService.createMessage(room.id, sender, message);
-      io.to(chatroom).emit("chatMessage", data);
+        await messageService.createMessage(room.id, sender, message);
+        io.to(chatroom).emit("chatMessage", data);
+      } catch (err) {
+        console.error(err);
+      }
     });
   });
 };

@@ -1,0 +1,32 @@
+# flyctl launch added from .gitignore
+**/node_modules
+
+# flyctl launch added from packages/backend/.gitignore
+packages/backend/**/node_modules
+packages/backend/**/.env
+
+# flyctl launch added from packages/frontend/.gitignore
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+packages/frontend/node_modules
+packages/frontend/.pnp
+packages/frontend/**/.pnp.js
+
+# testing
+packages/frontend/coverage
+
+# production
+packages/frontend/build
+
+# misc
+packages/frontend/**/.DS_Store
+packages/frontend/**/.env.local
+packages/frontend/**/.env.development.local
+packages/frontend/**/.env.test.local
+packages/frontend/**/.env.production.local
+
+packages/frontend/**/npm-debug.log*
+packages/frontend/**/yarn-debug.log*
+packages/frontend/**/yarn-error.log*
+fly.toml

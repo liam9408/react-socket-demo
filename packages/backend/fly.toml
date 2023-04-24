@@ -1,0 +1,42 @@
+# fly.toml file generated for be-sockets-liam-21-apr on 2023-04-22T10:19:36+07:00
+
+app = "be-sockets-liam-21-apr"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[env]
+  NODE_ENV='development'
+  DATABASE_URL='postgres://postgres:IDX6urePTuF4SNe@[fdaa:1:74c5:0:1::4]:5432/messages'
+
+[experimental]
+  auto_rollback = true
+
+[[services]]
+  http_checks = []
+  internal_port = 8080
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    force_https = true
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"
+
+# [deploy]
+#   release_command = "npx sequelize-cli db:migrate --url 'postgres://postgres:IDX6urePTuF4SNe@[fdaa:1:74c5:0:1::4]:5432/messages'"
