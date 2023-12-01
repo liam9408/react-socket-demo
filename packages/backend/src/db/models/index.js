@@ -1,11 +1,12 @@
-import { Sequelize } from "sequelize";
-import Rooms from "./rooms.js";
-import Messages from "./messages.js";
+import { Sequelize } from 'sequelize';
+import Rooms from './rooms.js';
+import Messages from './messages.js';
 
-console.info("Initializing sequelize...");
+console.info('Initializing sequelize...');
 
+console.log(process.env.DATABASE_URL);
 const sqlInitialize = () => {
-  if (process.env.NODE_ENV !== "local") {
+  if (process.env.NODE_ENV !== 'local') {
     // process.env.DEVELOPMENT
     const connectionString = process.env.DATABASE_URL;
     return new Sequelize(connectionString, {});
@@ -17,7 +18,7 @@ const sqlInitialize = () => {
     process.env.POSTGRES_PASSWORD,
     {
       host: process.env.POSTGRES_HOST,
-      dialect: "postgres",
+      dialect: 'postgres',
       logging: false,
       pool: {
         min: 0,
@@ -33,7 +34,7 @@ export const sequelize = sqlInitialize();
 
 export const initModels = async (sequelizeInst) => {
   try {
-    console.info("Initializing sequelize models...");
+    console.info('Initializing sequelize models...');
     await Rooms.initModel(sequelizeInst);
     await Messages.initModel(sequelizeInst);
   } catch (error) {
@@ -43,7 +44,7 @@ export const initModels = async (sequelizeInst) => {
 
 export const initAssociation = async () => {
   try {
-    console.info("Initializing sequelize associations...");
+    console.info('Initializing sequelize associations...');
     await Rooms.initAssociation();
     await Messages.initAssociation();
   } catch (error) {

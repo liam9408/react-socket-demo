@@ -7,7 +7,7 @@ processes = []
 
 [env]
   NODE_ENV='development'
-  DATABASE_URL='postgres://postgres:IDX6urePTuF4SNe@[fdaa:1:74c5:0:1::4]:5432/messages'
+  DATABASE_URL='postgres://postgres:IDX6urePTuF4SNe@[fdaa:1:74c5:0:1::4]:5432/rocketship'
 
 [experimental]
   auto_rollback = true
@@ -38,5 +38,5 @@ processes = []
     restart_limit = 0
     timeout = "2s"
 
-# [deploy]
-#   release_command = "npx sequelize-cli db:migrate --url 'postgres://postgres:IDX6urePTuF4SNe@[fdaa:1:74c5:0:1::4]:5432/messages'"
+[deploy]
+  release_command = "npx sequelize-cli db:migrate --url 'postgres://postgres:IDX6urePTuF4SNe@[fdaa:1:74c5:0:1::4]:5432/messages'"

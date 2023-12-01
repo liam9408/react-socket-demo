@@ -20,7 +20,8 @@ export const initializeSockets = (io) => {
         let room = await roomService.getRoomByName(roomName);
         console.log({ room, roomName });
         if (!room) {
-          room = await roomService.createRoom(roomName);
+          throw new Error({ code: 20004, message: "room does not exist" });
+          // room = await roomService.createRoom(roomName);
         }
 
         const messages = await messageService.listMessagesByRoom(room.id);
@@ -36,6 +37,7 @@ export const initializeSockets = (io) => {
         io.to(chatroom).emit("joinRoom", { room, messages });
       } catch (err) {
         console.error(err);
+        res.status(500).json(err);
       }
     });
 
