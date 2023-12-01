@@ -4,7 +4,6 @@ import Messages from './messages.js';
 
 console.info('Initializing sequelize...');
 
-console.log(process.env.DATABASE_URL);
 const sqlInitialize = () => {
   if (process.env.NODE_ENV !== 'local') {
     // process.env.DEVELOPMENT

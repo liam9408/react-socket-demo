@@ -1,5 +1,5 @@
-import { Model, DataTypes } from "sequelize";
-import Messages from "./messages.js";
+import { Model, DataTypes } from 'sequelize';
+import Messages from './messages.js';
 
 class Room extends Model {
   static initModel(sequelize) {
@@ -16,7 +16,7 @@ class Room extends Model {
       },
       {
         sequelize,
-        modelName: "room",
+        modelName: 'room',
       }
     );
   }

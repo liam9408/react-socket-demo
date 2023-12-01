@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from "react";
-import io from "socket.io-client";
+import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
 
 const ChatPage = () => {
   const [socket, setSocket] = useState(null);
-  const [username, setUsername] = useState("");
-  const [message, setMessage] = useState("");
+  const [username, setUsername] = useState('');
+  const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [currentRoom, setCurrentRoom] = useState({});
 
   useEffect(() => {
-    const newSocket = io("https://be-sockets-liam-21-apr.fly.dev");
+    // const newSocket = io("https://be-sockets-liam-21-apr.fly.dev");
+    const newSocket = io('http://localhost:8080');
     setSocket(newSocket);
 
     // 3
-    newSocket.on("chatMessage", (data) => {
+    newSocket.on('chatMessage', (data) => {
       console.log(data);
       setMessages((prevMessages) => [
         ...prevMessages,
@@ -22,7 +23,7 @@ const ChatPage = () => {
     });
 
     // 4
-    newSocket.on("joinRoom", (data) => {
+    newSocket.on('joinRoom', (data) => {
       const { room, messages } = data;
       setCurrentRoom(room);
       setMessages(
@@ -40,18 +41,18 @@ const ChatPage = () => {
     e.preventDefault();
     if (!socket) return;
 
-    socket.emit("chatMessage", [message, username, currentRoom]);
-    setMessage("");
+    socket.emit('chatMessage', [message, username, currentRoom]);
+    setMessage('');
   };
 
   // 1
   const joinChatRoom = () => {
-    const room = prompt("Which room would you like to join?");
+    const room = prompt('Which room would you like to join?');
 
     if (currentRoom !== {}) {
-      socket.emit("unsubscribe", currentRoom.name);
+      socket.emit('unsubscribe', currentRoom.name);
     }
-    socket.emit("subscribe", room);
+    socket.emit('subscribe', room);
   };
 
   return (
