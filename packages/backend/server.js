@@ -16,6 +16,12 @@ const io = new Server(http, {
   },
 });
 
+io.use((socket, next) => {
+  console.log('jwt token', socket.handshake.auth.token);
+  // auth0 logic to verify the jwt
+  next();
+});
+
 const PORT = process.env.PORT || 8080;
 
 const initializeApp = async () => {

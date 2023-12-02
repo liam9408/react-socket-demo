@@ -4,13 +4,16 @@ import io from 'socket.io-client';
 const ChatPage = () => {
   const [socket, setSocket] = useState(null);
   const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [currentRoom, setCurrentRoom] = useState({});
 
   useEffect(() => {
     // const newSocket = io("https://be-sockets-liam-21-apr.fly.dev");
-    const newSocket = io('http://localhost:8080');
+    const newSocket = io('http://localhost:8080', {
+      auth: { token: 'your_jwt_token' },
+    });
     setSocket(newSocket);
 
     // 3
@@ -52,31 +55,45 @@ const ChatPage = () => {
     if (currentRoom !== {}) {
       socket.emit('unsubscribe', currentRoom.name);
     }
+
     socket.emit('subscribe', room);
   };
 
   return (
     <div className="App">
       {/* username input */}
-      <div>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
+      <div className="control-wrapper">
+        <div className="control-item">
+          <label htmlFor="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="control-item">
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
 
-      {/* join chat room button */}
-      <div>
-        <button id="join" onClick={joinChatRoom}>
-          Join Chat Room
-        </button>
-      </div>
+        {/* join chat room button */}
+        <div className="control-item">
+          <button id="join" onClick={joinChatRoom}>
+            Join Chat Room
+          </button>
+        </div>
 
-      {/* chat room display */}
-      <div id="room">You are in Room: {currentRoom.name}</div>
+        {/* chat room display */}
+        <div id="room" className="control-item">
+          You are in Room: {currentRoom.name}
+        </div>
+      </div>
 
       {/* messages list */}
       <ul id="messages">
